@@ -1,10 +1,19 @@
-// Enemies our player must avoid
-var Enemy = function(x,y,speed) {
+// Character superclass
+var Character = function(x,y,speed){
     // Variables applied to each of our instances go here,
     this.x = x;
     this.y = y;
     this.speed = speed;
+};
 
+// Draw the character on the screen
+Character.prototype.render = function(x,y,sprite){
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// Enemies our player must avoid
+var Enemy = function(x,y,speed) {
+    Character.call(this,x,y,speed);
     // Set enemy's width and height
     this.w = 75;
     this.h = 50;
@@ -12,6 +21,9 @@ var Enemy = function(x,y,speed) {
     // The image/sprite for our enemies
     this.sprite = 'images/enemy-bug.png';
 };
+
+Enemy.prototype = Object.create(Character.prototype);
+Enemy.prototype.constructor = Enemy;
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
@@ -33,12 +45,6 @@ Enemy.prototype.update = function(dt) {
     }
 };
 
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-
 // Check for Collisions
 Enemy.prototype.checkCollision = function() {
     // 2D collision detection method. If a collision is detected game
@@ -55,9 +61,8 @@ Enemy.prototype.checkCollision = function() {
 
 // Player class
 var Player = function(x,y,speed) {
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
+
+    Character.call(this,x,y,speed);
     this.sprite = 'images/char-horn-girl.png';
 
     // Set the player's width and height
@@ -65,6 +70,8 @@ var Player = function(x,y,speed) {
     this.w = 50;
 };
 
+Player.prototype = Object.create(Character.prototype);
+Player.prototype.constructor = Player;
 
 // Update the player's position
 Player.prototype.update = function() {
@@ -72,7 +79,7 @@ Player.prototype.update = function() {
     // is less than 0. If so, alert the player about win and reset the
     // player's position to the starting point.
     if(this.y < 0){
-        player.reset();
+        this.reset();
         alert("You won!");
     }
 
@@ -90,13 +97,6 @@ Player.prototype.update = function() {
         this.x = 400;
     }
 };
-
-
-// Draw the player on the screen, required method for game
-Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
 
 // Handle keybord input
 Player.prototype.handleInput = function(key) {
@@ -117,8 +117,8 @@ Player.prototype.handleInput = function(key) {
 
 // Reset the player's position back to the starting point.
 Player.prototype.reset = function(){
-    player.x = 200;
-    player.y = 400;
+    this.x = 200;
+    this.y = 400;
 };
 
 // Instantiate enemies object.
@@ -137,7 +137,7 @@ var allEnemies = [
 
 // Instantiate the player object:
 // Place the player object in a variable called player
-var player = new Player(200, 400, 75);
+var player = new Player(200, 400, 100);
 
 
 // This listens for key presses and sends the keys to Player.handleInput() method.
