@@ -41,8 +41,8 @@ Enemy.prototype.render = function() {
 
 // Check for Collisions
 Enemy.prototype.checkCollision = function() {
-    // 2D collision detection method. If collision is detected game
-    // alerts us and resets the player's position.
+    // 2D collision detection method. If a collision is detected game
+    // gives an alert and resets the player's position.
    if(player.x < this.x + this.w &&
         player.x + player.w > this.x &&
         player.y < this.y + this.h &&
@@ -58,7 +58,7 @@ var Player = function(x,y,speed) {
     this.x = x;
     this.y = y;
     this.speed = speed;
-    this.sprite = 'images/char-boy.png';
+    this.sprite = 'images/char-horn-girl.png';
 
     // Set the player's width and height
     this.h = 50;
@@ -76,7 +76,7 @@ Player.prototype.update = function() {
         alert("You won!");
     }
 
-    //Make sure the player can not go above his starting point's
+    // Make sure the player can not go above his starting point's
     // y coordinate. Set players y to starting point's y value.
     else if(this.y > 400){
         this.y = 400;
@@ -121,15 +121,22 @@ Player.prototype.reset = function(){
     player.y = 400;
 };
 
-// Now instantiate your objects.
+// Instantiate enemies object.
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
-
+// All enemies has starting x values -100 to have them smoothly appear on the canvas.
+// The first enemy has y value 60 which puts it on the first row of the road.
+// The second enemy has y value 150 which puts it on the second row of the road.
+// The third enemy has y value 230 which puts it on the third row of the road.
+// All enemies' speeds are calculated with Math.random() with minimum value
+//for speed 50 ans maximum value 300.
 var allEnemies = [
         new Enemy(-100,60,Math.floor(Math.random() * (300 - 50) + 50)),
         new Enemy(-100,150,Math.floor(Math.random() * (300 - 50) + 50)),
         new Enemy(-100,230,Math.floor(Math.random() * (300 - 50) + 50))
 ];
+
+// Instantiate the player object:
+// Place the player object in a variable called player
 var player = new Player(200, 400, 75);
 
 

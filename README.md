@@ -1,8 +1,11 @@
-#Frogger Arcade Game
+#Classic Arcade Game Clone
 
 ### How to run the game
 
-Open the app.js file in you browser and you are ready to play!
+1. Dowlnoad the game repository to your local machine.
+2. Open the index.html in your browser and you are ready to play!
+
+As another option you can go <a href="https://julia-kudinovich.github.io/frontend-nanodegree-arcade-game/" target="_blank">here</a> and play the game directly from my GitHub page.
 
 ### How to play
 
